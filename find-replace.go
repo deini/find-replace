@@ -66,6 +66,8 @@ func walkpath(path string, fileOrDir os.FileInfo, err error) error {
     if !fileOrDir.IsDir() {
         wg.Add(1)
         go handleFiles(path, &wg)
+    } else if path == ".git" {
+        return filepath.SkipDir
     }
 
     wg.Wait()
